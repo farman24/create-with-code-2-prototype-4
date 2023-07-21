@@ -31,13 +31,14 @@ public class playerController : MonoBehaviour
     public Button restartButton;
     public GameObject backGround;
     public GameObject bullet;
+    public GameObject iceball;
     public ParticleSystem powerUp2Explosion;
     private bool ispressed = false;
     private bool ispressed2 = false;
     private bool ispressed3 = false;
     private bool ispressed4 = false;
     private bool canDash = true;
-
+    public GameObject[] controllbuttons;
 
 
     // Start is called before the first frame update
@@ -111,6 +112,11 @@ public class playerController : MonoBehaviour
             gameovertext.gameObject.SetActive(true);
             restartButton.gameObject.SetActive(true);
             backGround.gameObject.SetActive(true);
+            
+            foreach(GameObject button in controllbuttons)
+            {
+                button.SetActive(false); 
+            }
         }
     }
     public void restrtButton()
@@ -225,11 +231,15 @@ public class playerController : MonoBehaviour
     {
         if (canDash==true)
         {
+            iceball.SetActive(true);
             playerRB.mass = 20;
+            normalCollisionForce *= 3;
             playerRB.AddForce(focalpoint.transform.forward * dashForce, ForceMode.Impulse);
             yield return new WaitForSeconds(0.3f);
             playerRB.mass = 1.5f;
+            normalCollisionForce /= 3;
             canDash= false;
+            iceball.SetActive(false);
         }
         
     }
@@ -255,6 +265,9 @@ public class playerController : MonoBehaviour
             Vector3 bouncyn = collision.gameObject.transform.position - transform.position;
             enemyRigidbody.AddForce(bouncyn * normalCollisionForce, ForceMode.Impulse);
         }
+     
+
+        
 
     }
 }
