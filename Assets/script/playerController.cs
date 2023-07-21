@@ -36,6 +36,7 @@ public class playerController : MonoBehaviour
     private bool ispressed2 = false;
     private bool ispressed3 = false;
     private bool ispressed4 = false;
+    private bool canDash = true;
 
 
 
@@ -222,11 +223,22 @@ public class playerController : MonoBehaviour
     }
     IEnumerator Dash()
     {
-        playerRB.mass = 20;
-        playerRB.AddForce(focalpoint.transform.forward * dashForce, ForceMode.Impulse);
-        yield return new WaitForSeconds(0.3f);
-        playerRB.mass = 1.5f;
+        if (canDash==true)
+        {
+            playerRB.mass = 20;
+            playerRB.AddForce(focalpoint.transform.forward * dashForce, ForceMode.Impulse);
+            yield return new WaitForSeconds(0.3f);
+            playerRB.mass = 1.5f;
+            canDash= false;
+        }
+        
     }
+    public void canDashTrue()
+    {
+        canDash = true;
+        
+    }
+
 
     private void OnCollisionEnter(Collision collision)
     {

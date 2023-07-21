@@ -9,11 +9,15 @@ public class spawnManager : MonoBehaviour
     public GameObject[] powerUp;
     public int enemyCount;
     public int waveNumber=1;
+    public playerController playerControllerScript;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         spawnEnemyWave(waveNumber);
+        
+
     }
     // Update is called once per frame
     void spawnEnemyWave(int enemiesToSpawn)
@@ -24,8 +28,9 @@ public class spawnManager : MonoBehaviour
 
         }
         int index = Random.Range(0, powerUp.Length);
-        Instantiate(powerUp[index], generateRandomSpawnPosition(), powerUp[index].transform.rotation);
 
+        Instantiate(powerUp[index], generateRandomSpawnPosition(), powerUp[index].transform.rotation);
+        playerControllerScript.canDashTrue();
     }
     void Update()
     {
@@ -35,6 +40,7 @@ public class spawnManager : MonoBehaviour
         {
             waveNumber++;
             spawnEnemyWave(waveNumber);
+
         }
     }
     private Vector3 generateRandomSpawnPosition()
